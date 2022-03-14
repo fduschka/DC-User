@@ -1,0 +1,30 @@
+{
+  "name": "dc-user",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fduschka/DC-User.git"
+  },
+  "keywords": [],
+  "author": "Ferdinand Duschka",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fduschka/DC-User/issues"
+  },
+  "homepage": "https://github.com/fduschka/DC-User#readme",
+  "dependencies": {
+    "axios": "^0.26.1",
+    "chalk": "^5.0.1",
+    "clipboardy": "^3.0.0",
+    "gradient-string": "^2.0.0",
+    "inquirer": "^8.2.1",
+    "nanospinner": "^1.0.0"
+  }
+}
