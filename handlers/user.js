@@ -29,11 +29,7 @@ export default class User {
                 spinner.error({ text: 'User ID is not set' });
                 reject(new Error('User ID is not set'));
             } 
-            axios.get(`https://discord.com/api/users/${this.userID}`, {
-                headers: {
-                    'Authorization': `Bot ${'OTE3OTgxMDI2ODAwNzk1Njcw.YbAmdA.zZ8SdMBQZzwx4zZqla6HguntSNs'}`,
-                }
-            })
+            axios.get(`https://discord-user-api.ferdi5250.workers.dev?id=${this.userID}`)
             .then(response => {
                 spinner.success({ text: 'User Data successfully fetched' });
                 this.userInfo = response.data;

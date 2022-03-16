@@ -2,7 +2,6 @@
 
 import Runner from './handlers/runner.js';
 
-
 const runner = new Runner();
 runner.run();
 
