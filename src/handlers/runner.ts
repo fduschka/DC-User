@@ -1,20 +1,24 @@
 import inquirer from 'inquirer';
 import gradient from 'gradient-string';
-import User from './user.js';
-import Clipboard from './clipboard.js';
+import { User } from './user.js';
+import { Clipboard } from './clipboard.js';
 
-export default class Runner {
+export class Runner {
+
+    user: User;
+    clipboard: Clipboard;
+
     constructor() {
         this.user = new User();
         this.clipboard = new Clipboard();
     }
 
-    async run() {
+    async run(): Promise<void> {
         this.printTemp();
         await this.askInputType();
     }
 
-    async printTemp() {
+    async printTemp(): Promise<void> {
         console.clear();
         console.log(gradient.rainbow("Welcome to Discord User Info Cli!"));
         console.log("");
@@ -22,7 +26,7 @@ export default class Runner {
         console.log("");
     }
 
-    async askInputType() {
+    async askInputType(): Promise<void> {
         const { inputType } = await inquirer.prompt([
             {
                 type: 'list',
@@ -41,7 +45,7 @@ export default class Runner {
         }
     }
 
-    async askUserID() {
+    async askUserID(): Promise<void> {
         this.printTemp();
 
         const { userID } = await inquirer.prompt([
@@ -54,14 +58,14 @@ export default class Runner {
         this.processUserID(userID);
     }
 
-    async processUserID(ID) {
+    async processUserID(ID: string): Promise<void> {
         this.user.setUserID(ID).populate().then(user => {
-            user.printOutput(); 
+            this.user.printOutput();
             this.askCompleteOptions();
         })
     }
 
-    async askCompleteOptions() {
+    async askCompleteOptions(): Promise<void> {
         const { option } = await inquirer.prompt([
             {
                 type: 'list',
@@ -75,6 +79,6 @@ export default class Runner {
         ]);
         if (option === 'Copy Avatar URL to clipboard') {
             this.clipboard.set(this.user.getAvatarUrl());
-        } 
+        }
     }
 }

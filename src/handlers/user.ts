@@ -1,18 +1,38 @@
 import axios from "axios";
 import { createSpinner } from 'nanospinner';
-import chalk from 'chalk';
+import gradient from 'gradient-string';
 
-export default class User {
-    setUserID(userID) {
+interface UserApiObj {
+    id: number;
+    username: string;
+    avatar: string | null;
+    discriminator: string;
+    public_flags: number;
+    banner: string | null;
+    banner_color: string | null;
+    accent_color: string | null;
+}
+
+export class User {
+
+    userID: string;
+    userInfo: UserApiObj | null;
+
+    constructor() {
+        this.userID = "";
+        this.userInfo = null;
+    }
+
+    setUserID(userID: string): User {
         this.userID = userID;
         return this;
     }
 
-    populate() {
+    populate(): Promise<User> {
         return new Promise((resolve, reject) => {
             if (this.userID.length === 0) return reject(new Error('User ID is not set'));
             
-            this.getUserInfo().then(userInfo => {
+            this.getUserInfo().then((userInfo: any) => {
                 this.userInfo = userInfo;
                 resolve(this);
             }).catch(error => {
@@ -21,7 +41,7 @@ export default class User {
         });
     }
 
-    getUserInfo() {
+    getUserInfo(): Promise<UserApiObj> {
         return new Promise((resolve, reject) => {
             const spinner = createSpinner('Fetching user Data...').start(); 
 
@@ -41,15 +61,17 @@ export default class User {
         })
     }
 
-    getAvatarUrl() {
+    getAvatarUrl(): string {
+        if (this.userInfo === null) return "";
         return `https://cdn.discordapp.com/avatars/${this.userID}/${this.userInfo.avatar}.png`;
     }
 
-    printOutput() {
+    printOutput(): User {
+        if (this.userInfo === null) return this;
         console.log("");
-        console.log(`${chalk.bgGreen.bold('Username:')} ${ this.userInfo.username }`);
-        console.log(`${chalk.bgRed.bold('Discriminator:')} ${ this.userInfo.discriminator }`);
-        console.log(`${chalk.bgBlue.bold('Avatar URL:')} ${ this.getAvatarUrl() }`);
+        console.log(`${gradient.cristal('Username:')} ${ this.userInfo.username }`);
+        console.log(`${gradient.fruit('Discriminator:')} ${ this.userInfo.discriminator }`);
+        console.log(`${gradient.mind('Avatar URL:')} ${ this.getAvatarUrl() }`);
         console.log("");
         return this;
     }

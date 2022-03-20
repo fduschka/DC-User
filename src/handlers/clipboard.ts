@@ -1,12 +1,13 @@
 import clipboard from 'clipboardy';
 
-export default class Clipboard {
-    set(value) {
+export class Clipboard {
+
+    set(value: string): Clipboard {
         clipboard.writeSync(value);
         return this;
     }
 
-    get() {
+    get(): string {
         return clipboard.readSync()
     }
 }
